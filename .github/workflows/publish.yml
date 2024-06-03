@@ -31,14 +31,17 @@ jobs:
         run: |
           npm install
           npm run build
+          ls -la
       - name: Publish New Version
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         run: |
           git config --local user.email "tawasal"
           git config --local user.name "tawasal"
-          yarn version --new-version ${{github.event.inputs.release}} --no-git-tag-version
-          yarn publish --access public
+          #yarn version --new-version ${{github.event.inputs.release}} --no-git-tag-version
+          #yarn publish --access public
+          npm version --new-version ${{github.event.inputs.release}} --no-git-tag-version
+          npm publish --access public
           PACKAGE_VERSION=$(node -p "require('./package.json').version")
           git commit -a -m "v${PACKAGE_VERSION}"
           #git push
