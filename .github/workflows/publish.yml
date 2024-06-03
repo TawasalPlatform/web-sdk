@@ -22,12 +22,13 @@ jobs:
         with:
           node-version: '14'
           registry-url: https://registry.npmjs.org/
-      - name: Install Yarn
-        run: npm install yarn
-      - name: Install dependencies
-        run: yarn
+      #- name: Install Yarn
+      #  run: npm install yarn
+      #- name: Install dependencies
+      #  run: yarn
       - name: Build
-        run: yarn build
+        #run: yarn build
+        run: npm build
       - name: Publish New Version
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
