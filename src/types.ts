@@ -45,9 +45,7 @@ export type Method =
     | "getUser"
     | "open"
     | "getPushToken"
-    | "updateSettings"
     | "readClipboard"
-    | "track"
     | "share"
     | "getWalletBalance"
     | "getWalletTransactions"
@@ -127,9 +125,7 @@ declare global {
             getUserFlags: (req: string) => void; // because stringify json
             getUserPhoto: (req: string) => void; // because stringify json
             getPushToken: (req: string) => void; // because stringify json
-            updateSettings: (req: string) => void; // because stringify json
             readClipboard: (req: string) => void; // because stringify json
-            track: (req: string) => void; // because stringify json
             share: (req: string) => void; // because stringify json
             getWalletBalance: (req: string) => void; // because stringify json
             getWalletTransactions: (req: string) => void; // because stringify json
@@ -150,9 +146,7 @@ declare global {
                 getUserFlags?: PostMessage;
                 getUserPhoto?: PostMessage;
                 getPushToken?: PostMessage;
-                updateSettings?: PostMessage;
                 readClipboard?: PostMessage;
-                track?: PostMessage;
                 share?: PostMessage;
                 getWalletBalance?: PostMessage;
                 getWalletTransactions?: PostMessage;
