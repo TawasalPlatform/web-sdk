@@ -1,0 +1,31 @@
+{
+  "name": "tawasal-web-sdk",
+  "version": "0.0.1",
+  "description": "tawasal sdk for web development",
+  "main": "dist/index.js",
+  "scripts": {
+    "lint": "tsc",
+    "build": "rm -rf dist && node esbuild.js && tsc"
+  },
+  "keywords": [
+    "tawasal",
+    "superapp",
+    "sdk"
+  ],
+  "author": "dygy",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^27.4.0",
+    "jest": "^27.4.5",
+    "ts-jest": "^27.1.2",
+    "typescript": "4.5.4"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "dependencies": {
+    "esbuild": "0.21.4",
+    "esbuild-node-externals": "1.13.1",
+    "nanoid": "5.0.7"
+  }
+}
