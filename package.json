@@ -1,11 +1,14 @@
 {
-  "name": "tawasal-web-sdk",
+  "name": "@tawasal/web-sdk",
   "version": "0.0.1",
   "description": "tawasal sdk for web development",
   "main": "dist/index.js",
   "scripts": {
     "lint": "tsc",
     "build": "rm -rf dist && node esbuild.js && tsc"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "tawasal",
