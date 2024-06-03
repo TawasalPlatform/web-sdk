@@ -22,6 +22,8 @@ jobs:
         with:
           node-version: '14'
           registry-url: https://registry.npmjs.org/
+      - name: Install Yarn
+        run: npm install yarn
       - name: Install dependencies
         run: yarn
       - name: Build
@@ -36,4 +38,4 @@ jobs:
           yarn publish --access public
           PACKAGE_VERSION=$(node -p "require('./package.json').version")
           git commit -a -m "v${PACKAGE_VERSION}"
-          git push
+          #git push
