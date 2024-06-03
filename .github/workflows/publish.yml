@@ -28,7 +28,9 @@ jobs:
       #  run: yarn
       - name: Build
         #run: yarn build
-        run: npm build
+        run: |
+          npm ci
+          npm run build
       - name: Publish New Version
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
