@@ -15,10 +15,6 @@ if (typeof window !== "undefined") {
   window.tawasalCallbacks = {};
 }
 
-interface Settings {
-  discoverAsStartScreen: boolean;
-}
-
 export function checkIfImplemented(method: Method) {
   return (
     typeof window?.webkit?.messageHandlers?.[method]?.postMessage ===
@@ -33,7 +29,11 @@ export function callSuperApp(method: Method, request?: any) {
   window?.twAndroid?.[method]?.(jsonOrNo);
 }
 
-function withCallback(method: Method, callback: Callback<any>, data: any = {}) {
+export function withCallback(
+  method: Method,
+  callback: Callback<any>,
+  data: any = {},
+) {
   const callbackID = nanoid();
 
   window.tawasalCallbacks[callbackID] = (response: ValueOrError<any>) => {
