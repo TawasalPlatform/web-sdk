@@ -65,6 +65,8 @@ function close() {
 export function closeApp() {
   if (checkIfImplemented("hide")) {
     hideApp();
+  } else if (checkIfImplemented("closeApp")) {
+    close();
   } else {
     open("discover");
   }
