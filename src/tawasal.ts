@@ -9,7 +9,7 @@ import type {
   Destination,
 } from "./types";
 
-import { isObjectLike } from "./utils";
+import { isIOS, isObjectLike } from "./utils";
 
 if (typeof window !== "undefined") {
   window.tawasalCallbacks = {};
@@ -112,12 +112,18 @@ export function share({
   text,
   url,
   imgUrl,
+  isCustomIos,
 }: {
   text: string;
   url: string;
   imgUrl?: string;
+  isCustomIos?: boolean;
 }) {
-  callSuperApp("share", { text, url, imgUrl });
+  if (isIOS() && !isCustomIos) {
+    window.navigator.share({ text: `${text} ${url}`, url: imgUrl });
+  } else {
+    callSuperApp("share", { text, url, imgUrl });
+  }
 }
 
 export function getWalletBalance(callback: Callback<ValueOrError<string>>) {
