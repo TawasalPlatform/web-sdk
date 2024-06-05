@@ -13,17 +13,17 @@
 
 <hr />
 
-[![npm](https://img.shields.io/npm/v/@tawasal/web-sdk)](https://www.npmjs.com/package/@tawasal/web-sdk)
-[![npm](https://img.shields.io/npm/dm/@tawasal/web-sdk)](https://www.npmjs.com/package/@tawasal/web-sdk)
-[![Bundle Size](https://img.shields.io/bundlephobia/min/@tawasal/web-sdk)](https://bundlephobia.com/result?p=@tawasal/web-sdk)
-[![Bundle Size](https://img.shields.io/bundlephobia/minzip/@tawasal/web-sdk)](https://bundlephobia.com/result?p=@tawasal/web-sdk)
+[![npm](https://img.shields.io/npm/v/@tawasal/web)](https://www.npmjs.com/package/@tawasal/web)
+[![npm](https://img.shields.io/npm/dm/@tawasal/web)](https://www.npmjs.com/package/@tawasal/web)
+[![Bundle Size](https://img.shields.io/bundlephobia/min/@tawasal/web)](https://bundlephobia.com/result?p=@tawasal/web)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/@tawasal/web)](https://bundlephobia.com/result?p=@tawasal/web)
 
 This library provides a set of functions to create mini-apps within the Tawasal SuperApp environment. It leverages various methods to interact with the Tawasal platform, including user interactions, device features, and app-specific functionalities.
 
 ## Installation
 
 ```bash
-npm i @tawasal/web-sdk
+npm i @tawasal/web
 ```
 
 # Usage
@@ -35,7 +35,7 @@ npm i @tawasal/web-sdk
 Triggers haptic feedback with the specified pressure (haptic should be enabled on user side).
 
 ```ts
-import { haptic } from "@tawasal/web-sdk";
+import { haptic } from "@tawasal/web";
 
 for (const button of Array.from(document.getElementsByTagName("button"))) {
   button.onclick = () => haptic()
@@ -60,7 +60,7 @@ Closes the mini-app.
 Opens a chat with the specified user.
 
 ```typescript
-import { openChat } from "@tawasal/web-sdk";
+import { openChat } from "@tawasal/web";
 
 openChat("@Aibot") // force user to visit Mellow
 ```
@@ -70,7 +70,7 @@ openChat("@Aibot") // force user to visit Mellow
 Prompts the user to select contacts with a specified title for the selection dialog.
 
 ```ts
-  import { selectContacts } from "@tawasal/web-sdk";
+  import { selectContacts } from "@tawasal/web";
 
   selectContacts("title, to make users understand why they need to give contacts").then((value) => {
     if (value.length > 0) {
@@ -94,7 +94,7 @@ Fetches the user information. in provided scheme
 ```
 
 ```typescript
-import { getUser } from "@tawasal/web-sdk";
+import { getUser } from "@tawasal/web";
 
 getUser().then((value) => {
   console.log(value.firstName ?? value.userNickname)
@@ -106,7 +106,7 @@ getUser().then((value) => {
 Fetches the user's photo in base64 format.
 
 ```typescript
-import { getUserPhoto } from "@tawasal/web-sdk";
+import { getUserPhoto } from "@tawasal/web";
 
 getUserPhoto().then((value) => {
   setSrc(value);
@@ -118,7 +118,7 @@ getUserPhoto().then((value) => {
 Fetches the user's phone number for a specified reason. (can be denied on user side if he don't want to share phone with you)
 
 ```typescript
-import { getPhoneNumber } from "@tawasal/web-sdk";
+import { getPhoneNumber } from "@tawasal/web";
 
 getPhoneNumber("Provide title, so user will know why they should allow you their phone")
   .then((value) => {
@@ -141,7 +141,7 @@ Reads the content of the clipboard.
 Shares specified messages via the Tawasal SuperApp.
 
 ```typescript
-import { share } from "@tawasal/web-sdk";
+import { share } from "@tawasal/web";
 
 share({
   text: `lets visit ${club.name} tonight!`, 
@@ -169,7 +169,7 @@ Closes the QR code scanner.
 Checks if a method is implemented in the Tawasal SuperApp environment. It can help with the newest hooks, to check if user version supports it.
 
 ```typescript
-import { checkIfImplemented } from "@tawasal/web-sdk";
+import { checkIfImplemented } from "@tawasal/web";
 
 if (checkIfImplemented("selectContacts")) {
   // do select contacts
@@ -182,7 +182,7 @@ if (checkIfImplemented("selectContacts")) {
 This method helps you receive avatars via API
 
 ```typescript
-import { selectContacts, getAvatar } from "@tawasal/web-sdk";
+import { selectContacts, getAvatar } from "@tawasal/web";
 selectContacts("title").then((selectedUsers) => {
   if (selectedUsers[0]) {
     getAvatar(
