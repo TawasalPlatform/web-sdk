@@ -1,7 +1,7 @@
 #
 <div align="center">
   <a href="https://https://tawasal.ae/">
-    <img src="https://tawasal.ae/tawasal_logo_full.png" width="700" height="auto" alt="Tawasal"/>
+    <img src="https://tawasal.ae/tawasal_logo_full.png" width="300" height="auto" alt="Tawasal"/>
   </a>
 </div>
 
@@ -26,15 +26,16 @@ This library provides a set of functions to create mini-apps within the Tawasal 
 npm i @tawasal/web-sdk
 ```
 
-## Usage
+# Usage
 
-### Haptic Feedback
+## Haptic Feedback
 
 #### `haptic(pressure: "light" | "medium" | "heavy" | "soft" | "rigid")`
 
 Triggers haptic feedback with the specified pressure (haptic should be enabled on user side).
 
-### Navigation
+###
+## Navigation
 
 #### `open(destination: Destination)`
 
@@ -44,7 +45,8 @@ Opens a specified destination within the Tawasal SuperApp (include the haptic fo
 
 Closes the mini-app.
 
-### User Interactions
+###
+## User Interactions
 
 #### `openChat(userNickname: string)`
 
@@ -61,18 +63,18 @@ openChat("@Aibot") // force user to visit Mellow
 Prompts the user to select contacts with a specified title for the selection dialog.
 
 ```ts
-import { selectContacts } from "@tawasal/web-sdk";
+  import { selectContacts } from "@tawasal/web-sdk";
 
-selectContacts("phrase to make users understand why they need to give contacts", async (data) => {
-  if (data.error) {
-    return console.log(data.error);
-  }
+  selectContacts("phrase to make users understand why they need to give contacts", async (data) => {
+    if (data.error) {
+      return console.log(data.error);
+    }
 
-  if (data.value && data.value.length > 0) {
-    const contacts = data.value as Users[]
-    await addToStorage(contacts)
-  }
-});
+    if (data.value && data.value.length > 0) {
+      const contacts = data.value as Users[]
+      await addToStorage(contacts)
+    }
+  });
 ```
 #### `getUser(callback: Callback<ValueOrError<Contact>>)`
 
@@ -121,13 +123,15 @@ getPhoneNumber("Provide phrase so user will now why they should allow you their 
 });
 ```
 
-### Device Features
+###
+## Device Features
 
 #### `readClipboard(callback: Callback<ValueOrError<string>>)`
 
 Reads the content of the clipboard.
 
-### Social and Sharing
+###
+## Social
 
 #### `share({ text: string, url: string, imgUrl?: string })`
 
@@ -143,7 +147,8 @@ share({
 })
 ```
 
-### QR Code
+###
+## QR Code
 
 #### `showScanQR(callback: Callback<ValueOrError<string>>)`
 
@@ -153,7 +158,8 @@ Shows the QR code scanner.
 
 Closes the QR code scanner.
 
-### Helpers
+###
+## Helpers
 
 #### `checkIfImplemented(method: Method)`
 
@@ -169,7 +175,6 @@ if (checkIfImplemented("selectContacts")) {
 }
 ```
 
+# License
 
-## Conclusion
-
-This library simplifies the process of creating mini-apps within the Tawasal SuperApp by providing easy-to-use functions to interact with the app's features and services.
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
