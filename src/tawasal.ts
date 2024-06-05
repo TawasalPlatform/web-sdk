@@ -76,38 +76,52 @@ export function openChat(userIdOrNickname: number | string) {
   open(`contacts/${userIdOrNickname}`);
 }
 
-export function getUser(callback: Callback<ValueOrError<Contact>>) {
-  withCallback("getUser", callback);
+export function withPromise<T>(method: Method, data: any = {}): Promise<T> {
+  const callbackID = nanoid();
+  return new Promise((resolve, reject) => {
+    window.tawasalCallbacks[callbackID] = ({
+      value,
+      error,
+      result,
+    }: ValueOrErrorOrResult<T>) => {
+      if (result) resolve(result);
+      if (value) resolve(value);
+      if (error) reject(error);
+      delete window.tawasalCallbacks[callbackID];
+    };
+
+    callSuperApp(method, { ...data, callbackID });
+  });
 }
 
-export function getUserPhoto(callback: Callback<ValueOrError<string>>) {
-  withCallback("getUserPhoto", callback);
+export function getUser() {
+  return withPromise<Contact>("getUser");
 }
 
-export function getPhoneNumber(
-  reason: string,
-  callback: Callback<ValueOrError<string>>,
-) {
-  withCallback("getPhoneNumber", callback, { reason });
+export function getUserPhoto() {
+  return withPromise<string>("getUserPhoto").then((photo) => {
+    return `data:image/png;base64,${photo}`;
+  });
 }
 
-export function getUserLink(callback: Callback<ValueOrError<string>>) {
-  withCallback("getUserLink", callback);
+export function getPhoneNumber(reason: string) {
+  return withPromise<string>("getPhoneNumber", { reason });
 }
 
-export function getPushToken(
-  reason: string,
-  callback: Callback<ValueOrError<string>>,
-) {
-  withCallback("getPushToken", callback, { reason });
+export function getUserLink() {
+  return withPromise<string>("getUserLink");
 }
 
-export function readClipboard(callback: Callback<ValueOrError<string>>) {
-  withCallback("readClipboard", callback);
+export function getPushToken(reason: string) {
+  return withPromise<string>("getPushToken", { reason });
 }
 
-export function getUserFlags(callback: Callback<ValueOrError<string>>) {
-  withCallback("getUserFlags", callback);
+export function readClipboard() {
+  return withPromise<string>("readClipboard");
+}
+
+export function getUserFlags() {
+  return withPromise<string>("getUserFlags");
 }
 
 export function share({
@@ -128,26 +142,20 @@ export function share({
   }
 }
 
-export function getWalletBalance(callback: Callback<ValueOrError<string>>) {
-  withCallback("getWalletBalance", callback);
+export function getWalletBalance() {
+  return withPromise<string>("getWalletBalance");
 }
 
-export function getUserChannels(
-  reason: string,
-  callback: Callback<ValueOrError<object[]>>,
-) {
-  withCallback("getUserChannels", callback, { reason });
+export function getUserChannels(reason: string) {
+  return withPromise<object[]>("getUserChannels", { reason });
 }
 
-export function selectContacts(
-  title: string,
-  callback: Callback<ValueOrErrorOrResult<Contact[]>>,
-) {
-  withCallback("selectContacts", callback, { title });
+export function selectContacts(title: string) {
+  return withPromise<Contact[]>("selectContacts", { title });
 }
 
 export function showScanQR(callback: Callback<ValueOrError<string>>) {
-  withCallback("showScanQR", callback);
+  return withPromise<string>("showScanQR");
 }
 
 export function closeScanQR() {

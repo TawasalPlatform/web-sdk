@@ -58,25 +58,20 @@ import { openChat } from "@tawasal/web-sdk";
 openChat("@Aibot") // force user to visit Mellow
 ```
 
-#### `selectContacts(title: string, callback: Callback<ValueOrErrorOrResult<Contact[]>>)`
+#### `selectContacts(title: string): Promise<Contact[]>`
 
 Prompts the user to select contacts with a specified title for the selection dialog.
 
 ```ts
   import { selectContacts } from "@tawasal/web-sdk";
 
-  selectContacts("phrase to make users understand why they need to give contacts", async (data) => {
-    if (data.error) {
-      return console.log(data.error);
-    }
-
-    if (data.value && data.value.length > 0) {
-      const contacts = data.value as Users[]
-      await addToStorage(contacts)
+  selectContacts("title, to make users understand why they need to give contacts").then((value) => {
+    if (value.length > 0) {
+      addToStorage(value)
     }
   });
 ```
-#### `getUser(callback: Callback<ValueOrError<Contact>>)`
+#### `getUser(): Promise<Contact>`
 
 Fetches the user information. in provided scheme
 ```ts
@@ -94,39 +89,40 @@ Fetches the user information. in provided scheme
 ```typescript
 import { getUser } from "@tawasal/web-sdk";
 
-getUser(({ value }) => {
+getUser().then((value) => {
   console.log(value.firstName ?? value.userNickname)
 })
 ```
 
-#### `getUserPhoto(callback: Callback<ValueOrError<string>>)`
+#### `getUserPhoto(): Promise<base64String>`
 
 Fetches the user's photo.
 
 ```typescript
 import { getUserPhoto } from "@tawasal/web-sdk";
 
-getUserPhoto(({ value }) => {
-  if (value) setSrc(`data:image/png;base64,${value}`);
+getUserPhoto().then((value) => {
+  setSrc(value);
 }); 
 ```
 
-#### `getPhoneNumber(reason: string, callback: Callback<ValueOrError<string>>)`
+#### `getPhoneNumber(reason: string): Promise<string>`
 
 Fetches the user's phone number for a specified reason. (can be denied on user side if he don't want to share phone with you)
 
 ```typescript
 import { getPhoneNumber } from "@tawasal/web-sdk";
 
-getPhoneNumber("Provide phrase so user will now why they should allow you their phone", ({ value }) => {
-  if (value) form.submit({ phone: value });
-});
+getPhoneNumber("Provide title, so user will know why they should allow you their phone")
+  .then((value) => {
+    form.submit({ phone: value });
+  });
 ```
 
 ###
 ## Device Features
 
-#### `readClipboard(callback: Callback<ValueOrError<string>>)`
+#### `readClipboard(): Promise<string>`
 
 Reads the content of the clipboard.
 
@@ -150,7 +146,7 @@ share({
 ###
 ## QR Code
 
-#### `showScanQR(callback: Callback<ValueOrError<string>>)`
+#### `showScanQR(): Promise<string>`
 
 Shows the QR code scanner.
 
