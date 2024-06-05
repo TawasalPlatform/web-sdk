@@ -7,3 +7,9 @@ export const isIOS = () => {
 
   return /iPhone|iPod|iPad/.test(platform);
 };
+
+export function bigIntToHex(value?: bigint | string | null): string {
+  const bigint = typeof value === "string" ? BigInt(value) : value;
+
+  return bigint ? (bigint & BigInt("0xffffffffffffffff")).toString(16) : "";
+}

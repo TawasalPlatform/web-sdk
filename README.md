@@ -34,6 +34,13 @@ npm i @tawasal/web-sdk
 
 Triggers haptic feedback with the specified pressure (haptic should be enabled on user side).
 
+```ts
+import { haptic } from "@tawasal/web-sdk";
+
+for (const button of Array.from(document.getElementsByTagName("button"))) {
+  button.onclick = () => haptic()
+}
+```
 ###
 ## Navigation
 
@@ -96,7 +103,7 @@ getUser().then((value) => {
 
 #### `getUserPhoto(): Promise<base64String>`
 
-Fetches the user's photo.
+Fetches the user's photo in base64 format.
 
 ```typescript
 import { getUserPhoto } from "@tawasal/web-sdk";
@@ -131,7 +138,7 @@ Reads the content of the clipboard.
 
 #### `share({ text: string, url: string, imgUrl?: string })`
 
-Shares content via the Tawasal SuperApp.
+Shares specified messages via the Tawasal SuperApp.
 
 ```typescript
 import { share } from "@tawasal/web-sdk";
@@ -168,6 +175,44 @@ if (checkIfImplemented("selectContacts")) {
   // do select contacts
 } else {
   // ask users to update app or provide alternative flow
+}
+```
+
+#### `getAvatar( photoId: string, photoAccessHash: string, id: number)`
+This method helps you receive avatars via API
+
+```typescript
+import { selectContacts, getAvatar } from "@tawasal/web-sdk";
+selectContacts("title").then((selectedUsers) => {
+  if (selectedUsers[0]) {
+    getAvatar(
+      selectedUsers[0].userId,
+      selectedUsers[0].photoid, 
+      selectedUsers[0].photoaccesshash
+    )
+  }
+});
+```
+you can also specify if you are searching channel avatar, and specific root url, for custom domain
+```ts
+getAvatar(
+  channelId,
+  photoid, 
+  photoaccesshash, 
+  "channel",
+  "example.com"
+)
+```
+
+# Fixes for compabilty
+
+## Next.js
+#### ```error: ESM packages need to be imported```
+
+[add esm support to your next.js config](https://nextjs.org/docs/messages/import-esm-externals)  
+```js
+experimental: {
+  esmExternals: "loose" 
 }
 ```
 

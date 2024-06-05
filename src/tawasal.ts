@@ -44,6 +44,9 @@ export function withCallback(
   callSuperApp(method, { ...data, callbackID });
 }
 
+/**
+ * Triggers haptic feedback with the specified pressure (haptic should be enabled on user side).
+ */
 export function haptic(pressure: Pressure = "light") {
   callSuperApp("haptic", pressure);
 }
@@ -94,21 +97,36 @@ export function withPromise<T>(method: Method, data: any = {}): Promise<T> {
   });
 }
 
+/**
+ * Fetches the user information.
+ */
 export function getUser() {
   return withPromise<Contact>("getUser");
 }
 
+/**
+ * Fetches the user's photo in base64 format.
+ */
 export function getUserPhoto() {
   return withPromise<string>("getUserPhoto").then((photo) => {
     return `data:image/png;base64,${photo}`;
   });
 }
 
+/**
+ * Fetches the user's phone number for a specified reason.
+ * @Warning: Can be denied on user side if he don't want to share phone with you
+ */
 export function getPhoneNumber(reason: string) {
   return withPromise<string>("getPhoneNumber", { reason });
 }
 
+/**
+ * Get link of current user, so you could enter a chat with him.
+ * @Warning: Unstable
+ */
 export function getUserLink() {
+  console.warn("Please be aware that getUserLink is currently unstable");
   return withPromise<string>("getUserLink");
 }
 
@@ -116,6 +134,9 @@ export function getPushToken(reason: string) {
   return withPromise<string>("getPushToken", { reason });
 }
 
+/**
+ * Reads the content of the clipboard
+ */
 export function readClipboard() {
   return withPromise<string>("readClipboard");
 }
@@ -124,6 +145,9 @@ export function getUserFlags() {
   return withPromise<string>("getUserFlags");
 }
 
+/**
+ * Shares specified messages via the Tawasal SuperApp.
+ */
 export function share({
   text,
   url,
@@ -150,14 +174,44 @@ export function getUserChannels(reason: string) {
   return withPromise<object[]>("getUserChannels", { reason });
 }
 
+/**
+ * Prompts the user to select contacts with a specified title for the selection dialog.
+ */
 export function selectContacts(title: string) {
   return withPromise<Contact[]>("selectContacts", { title });
 }
 
+/**
+ * Shows the QR code scanner.
+ */
 export function showScanQR(callback: Callback<ValueOrError<string>>) {
   return withPromise<string>("showScanQR");
 }
 
+/**
+ * Closes the QR code scanner.
+ */
 export function closeScanQR() {
   callSuperApp("closeScanQR");
+}
+
+/**
+ * This method helps you receive avatars via API
+ */
+export function getAvatar(
+  id: number,
+  photoId: string | number | bigint,
+  photoAccessHash: string,
+  category: "user" | "channel" = "user",
+  rootUrl: string = "https://twl.ae",
+) {
+  let prefix;
+
+  if (category === "user") {
+    prefix = "u";
+  } else if (category === "channel") {
+    prefix = "c";
+  }
+
+  return `${rootUrl}/_/photos/${photoId}?ah=${photoAccessHash}&pk=${prefix}&pid=${id}`;
 }
