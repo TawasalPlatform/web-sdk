@@ -1,6 +1,6 @@
 #
 <div align="center">
-  <a href="https://https://tawasal.ae/">
+  <a href="https://tawasal.ae/">
     <img src="https://tawasal.ae/tawasal_logo_full.png" width="300" height="auto" alt="Tawasal"/>
   </a>
 </div>
