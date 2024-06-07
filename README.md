@@ -87,7 +87,7 @@ Fetches the user information. in provided scheme
   firstName: string;
   lastName?: string;
   userNickname?: string;
-  photoid?: number | null;
+  photoid?: bigint | null;
   photoaccesshash?: string | null;
   phone?: string;
 }
