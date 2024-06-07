@@ -184,7 +184,7 @@ export function selectContacts(title: string) {
 /**
  * Shows the QR code scanner.
  */
-export function showScanQR(callback: Callback<ValueOrError<string>>) {
+export function showScanQR() {
   return withPromise<string>("showScanQR");
 }
 
