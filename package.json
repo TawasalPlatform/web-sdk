@@ -1,6 +1,6 @@
 {
   "name": "@tawasal/web",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "tawasal sdk for web development",
   "main": "dist/index.js",
   "scripts": {
