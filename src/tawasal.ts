@@ -215,3 +215,10 @@ export function getAvatar(
 
   return `${rootUrl}/_/photos/${photoId}?ah=${photoAccessHash}&pk=${prefix}&pid=${id}`;
 }
+
+/**
+ * Gives control of pull to refresh feature.
+ */
+export function disablePullToRefresh(disabled: boolean) {
+  callSuperApp("disablePullToRefresh", { disabled });
+}
