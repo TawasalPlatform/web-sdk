@@ -14,7 +14,6 @@
 <hr />
 
 [![npm](https://img.shields.io/npm/v/@tawasal/web)](https://www.npmjs.com/package/@tawasal/web)
-[![npm](https://img.shields.io/npm/dm/@tawasal/web)](https://www.npmjs.com/package/@tawasal/web)
 [![Bundle Size](https://img.shields.io/bundlephobia/min/@tawasal/web)](https://bundlephobia.com/result?p=@tawasal/web)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/@tawasal/web)](https://bundlephobia.com/result?p=@tawasal/web)
 
