@@ -56,6 +56,8 @@ export type Method =
   | "showScanQR"
   | "hide"
   | "closeApp"
+  | "openUrl"
+  | "openApp"
   | "disablePullToRefresh";
 
 type IDOrUsername = string | number;
@@ -137,6 +139,8 @@ declare global {
       showScanQR: (req: string) => void; // because stringify json
       hide: undefined; // mistake was done on android :(
       closeApp: (req: string) => void; // because stringify json
+      openApp: (req: string) => void;
+      openUrl: (req: string) => void;
       disablePullToRefresh: (req: string) => void;
     };
     webkit?: {
@@ -160,6 +164,8 @@ declare global {
         hide?: PostMessage;
         closeApp?: undefined; // android hook that was done by mistake: (
         disablePullToRefresh: PostMessage;
+        openApp: PostMessage;
+        openUrl: PostMessage;
       };
     };
   }

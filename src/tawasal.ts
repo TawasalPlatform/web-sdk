@@ -51,6 +51,9 @@ export function haptic(pressure: Pressure = "light") {
   callSuperApp("haptic", pressure);
 }
 
+/**
+ * Open a specific Destination
+ */
 export function open(destination: Destination) {
   haptic();
 
@@ -221,4 +224,18 @@ export function getAvatar(
  */
 export function disablePullToRefresh(disabled: boolean) {
   callSuperApp("disablePullToRefresh", { disabled });
+}
+
+/**
+ * Open app by url app should be allowed)
+ */
+export function openApp(appName: string) {
+  callSuperApp("openApp", appName);
+}
+
+/**
+ * Open url in browser
+ */
+export function openUrl(url: string) {
+  callSuperApp("openUrl", url);
 }
