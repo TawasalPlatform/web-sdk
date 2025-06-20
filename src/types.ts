@@ -28,7 +28,7 @@ export interface Tawasal {
   lastName?: string;
   userNickname?: string;
   language: Language;
-  platform: "ios" | "android";
+  platform: "ios" | "android" | "web";
   version: string;
 }
 
