@@ -100,17 +100,18 @@ export type Cookie = {
   lastName?: string;
   userNickname?: string;
   language: Language;
-  platform: "ios" | "android";
+  platform: "ios" | "android" | "web";
   version: string;
 };
 
-export enum versions {
-  discover_as_start_introduced = 510,
-  vercel_hardcode_fixed = 510,
-  select_contacts_introduced = 520,
-  fix_DDoS_android = 523,
-  discover_3_0 = 530,
-}
+export const versions = {
+  discover_as_start_introduced: 510,
+  vercel_hardcode_fixed: 510,
+  select_contacts_introduced: 520,
+  fix_DDoS_android: 523,
+  discover_3_0: 530,
+  native_nav: 540,
+};
 
 type PostMessage = {
   postMessage: (message: unknown) => void;
