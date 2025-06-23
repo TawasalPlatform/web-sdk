@@ -116,6 +116,7 @@ type PostMessage = {
 
 declare global {
   interface Window {
+    tawasalMessageHandlerSet?: boolean;
     tawasal: Tawasal;
     tawasalCallbacks: TawasalCallbacks;
     twAndroid?: {

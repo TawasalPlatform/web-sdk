@@ -22,11 +22,40 @@ export function checkIfImplemented(method: Method) {
   );
 }
 
+const tawasalPromiseHandlers = new Map<string, (payload: any) => void>();
+
+if (typeof window !== "undefined" && !window.tawasalMessageHandlerSet) {
+  window.tawasalMessageHandlerSet = true;
+
+  window.addEventListener("message", (event: MessageEvent) => {
+    const { method, payload } = event.data || {};
+    if (!method || !payload?.callbackID) return;
+
+    const key = `${method}_${payload.callbackID}`;
+    const resolve = tawasalPromiseHandlers.get(key);
+    if (resolve) {
+      tawasalPromiseHandlers.delete(key);
+      resolve(payload);
+    }
+  });
+}
+
 export function callSuperApp(method: Method, request?: any) {
   const jsonOrNo = isObjectLike(request) ? JSON.stringify(request) : request;
 
-  window?.webkit?.messageHandlers?.[method]?.postMessage(request);
-  window?.twAndroid?.[method]?.(jsonOrNo);
+  if (checkIfImplemented(method)) {
+    window?.webkit?.messageHandlers?.[method]?.postMessage(request);
+    window?.twAndroid?.[method]?.(jsonOrNo);
+  } else {
+    window.top?.postMessage(
+      {
+        source: "tawasal",
+        method,
+        payload: request,
+      },
+      "*",
+    );
+  }
 }
 
 export function withCallback(
@@ -35,11 +64,18 @@ export function withCallback(
   data: any = {},
 ) {
   const callbackID = nanoid();
+  const key = `${method}_${callbackID}`;
 
-  window.tawasalCallbacks[callbackID] = (response: ValueOrError<any>) => {
-    callback(response);
-    delete window.tawasalCallbacks[callbackID];
-  };
+  if (checkIfImplemented(method)) {
+    window.tawasalCallbacks[callbackID] = (response: ValueOrError<any>) => {
+      callback(response);
+      delete window.tawasalCallbacks[callbackID];
+    };
+  } else {
+    tawasalPromiseHandlers.set(key, (response: ValueOrError<any>) => {
+      callback(response);
+    });
+  }
 
   callSuperApp(method, { ...data, callbackID });
 }
@@ -84,17 +120,27 @@ export function openChat(userIdOrNickname: number | string) {
 
 export function withPromise<T>(method: Method, data: any = {}): Promise<T> {
   const callbackID = nanoid();
+
   return new Promise((resolve, reject) => {
-    window.tawasalCallbacks[callbackID] = ({
-      value,
-      error,
-      result,
-    }: ValueOrErrorOrResult<T>) => {
-      if (result) resolve(result);
-      if (value) resolve(value);
-      if (error) reject(error);
-      delete window.tawasalCallbacks[callbackID];
-    };
+    if (checkIfImplemented(method)) {
+      window.tawasalCallbacks[callbackID] = ({
+        value,
+        error,
+        result,
+      }: ValueOrErrorOrResult<T>) => {
+        if (result) resolve(result);
+        if (value) resolve(value);
+        if (error) reject(error);
+        delete window.tawasalCallbacks[callbackID];
+      };
+    } else {
+      const key = `${method}_${callbackID}`;
+      tawasalPromiseHandlers.set(key, (response: ValueOrErrorOrResult<T>) => {
+        const { value, error, result } = response;
+        if (error) return reject(error);
+        resolve(result ?? value);
+      });
+    }
 
     callSuperApp(method, { ...data, callbackID });
   });
