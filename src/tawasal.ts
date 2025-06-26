@@ -50,19 +50,15 @@ if (typeof window !== "undefined" && !window.tawasalMessageHandlerSet) {
 
 export function callSuperApp(method: Method, request?: any) {
   const jsonOrNo = isObjectLike(request) ? JSON.stringify(request) : request;
-
-  if (checkIfImplemented(method)) {
-    window?.webkit?.messageHandlers?.[method]?.postMessage(request);
-    window?.twAndroid?.[method]?.(jsonOrNo);
-  } else {
-    window.top?.postMessage(
-      {
-        method,
-        payload: request,
-      },
-      "*",
-    );
-  }
+  window?.webkit?.messageHandlers?.[method]?.postMessage(request);
+  window?.twAndroid?.[method]?.(jsonOrNo);
+  window.top?.postMessage(
+    {
+      method,
+      payload: request,
+    },
+    "*",
+  );
 }
 
 export function withCallback(
