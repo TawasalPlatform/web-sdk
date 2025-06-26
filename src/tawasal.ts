@@ -17,18 +17,26 @@ if (typeof window !== "undefined") {
 
 export function checkIfImplemented(method: Method) {
   return (
+    supportedTawasalMethods.has(method) || // ← new layer
     typeof window?.webkit?.messageHandlers?.[method]?.postMessage ===
-      "function" || typeof window?.twAndroid?.[method] === "function"
+      "function" ||
+    typeof window?.twAndroid?.[method] === "function"
   );
 }
 
 const tawasalPromiseHandlers = new Map<string, (payload: any) => void>();
+const supportedTawasalMethods = new Set<string>();
 
 if (typeof window !== "undefined" && !window.tawasalMessageHandlerSet) {
   window.tawasalMessageHandlerSet = true;
 
   window.addEventListener("message", (event: MessageEvent) => {
     const { method, payload } = event.data || {};
+    if (method === "supportedMethods" && Array.isArray(payload)) {
+      payload.forEach((m) => supportedTawasalMethods.add(m));
+      return;
+    }
+
     if (!method || !payload?.callbackID) return;
 
     const key = `${method}_${payload.callbackID}`;
@@ -49,7 +57,6 @@ export function callSuperApp(method: Method, request?: any) {
   } else {
     window.top?.postMessage(
       {
-        source: "tawasal",
         method,
         payload: request,
       },
