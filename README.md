@@ -85,62 +85,7 @@ Prompts the user to select contacts with a specified title for the selection dia
     }
   });
 ```
-#### `getUser(): Promise<Contact>`
 
-Fetches the user information. in provided scheme
-```ts
-{
-  userId: number;
-  firstName: string;
-  lastName?: string;
-  userNickname?: string;
-  photoid?: bigint | null;
-  photoaccesshash?: string | null;
-  phone?: string;
-}
-```
-
-```typescript
-import { getUser } from "@tawasal/web";
-
-getUser().then((value) => {
-  console.log(value.firstName ?? value.userNickname)
-})
-```
-
-#### `getUserPhoto(): Promise<base64String>`
-
-Fetches the user's photo in base64 format.
-
-```typescript
-import { getUserPhoto } from "@tawasal/web";
-
-getUserPhoto().then((value) => {
-  setSrc(value);
-}); 
-```
-
-#### `getPhoneNumber(reason: string): Promise<string>`
-
-Fetches the user's phone number for a specified reason. (can be denied on user side if he don't want to share phone with you)
-
-```typescript
-import { getPhoneNumber } from "@tawasal/web";
-
-getPhoneNumber("Provide title, so user will know why they should allow you their phone")
-  .then((value) => {
-    form.submit({ phone: value });
-  });
-```
-
-###
-## Device Features
-
-#### `readClipboard(): Promise<string>`
-
-Reads the content of the clipboard.
-
-###
 ## Social
 
 #### `share({ text: string, url: string, imgUrl?: string })`
