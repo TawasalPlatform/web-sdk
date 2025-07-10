@@ -1,9 +1,7 @@
 import { nanoid } from "nanoid";
 import type {
-  ValueOrError,
   Method,
   Pressure,
-  Callback,
   ValueOrErrorOrResult,
   Contact,
   Destination,
@@ -104,10 +102,14 @@ export function open(destination: Destination) {
 }
 
 /**
- * Open app by name
+ * Open app
  */
-export function openApp(appName: string) {
-  callSuperApp("openApp", appName);
+export function openApp(appUrl: string, tag?: string) {
+  if (checkIfImplemented("openAppWithTag")) {
+    callSuperApp("openAppWithTag", { appUrl, tag });
+  } else {
+    callSuperApp("openApp", appUrl);
+  }
 }
 
 /**

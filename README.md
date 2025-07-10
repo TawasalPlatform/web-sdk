@@ -51,9 +51,10 @@ Opens a specified destination within the Tawasal SuperApp (include the haptic fo
 
 Closes the mini-app.
 
-#### `openApp(url: url)`
+#### `openApp(url: url, tag?: string)`
 
 Opens a mini app by url, should be allowed by policy
+If you send specific tag, will use window of specific tag, instead of openning new window if there is diff in pathname/search params
 
 #### `openUrl(url: string)`
 

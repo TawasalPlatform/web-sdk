@@ -58,7 +58,8 @@ export type Method =
   | "closeApp"
   | "openUrl"
   | "openApp"
-  | "disablePullToRefresh";
+  | "disablePullToRefresh"
+  | "openAppWithTag";
 
 type IDOrUsername = string | number;
 
@@ -141,6 +142,7 @@ declare global {
       openApp: (req: string) => void;
       openUrl: (req: string) => void;
       disablePullToRefresh: (req: string) => void;
+      openAppWithTag: (req: string) => void;
     };
     webkit?: {
       messageHandlers?: {
@@ -165,6 +167,7 @@ declare global {
         disablePullToRefresh: PostMessage;
         openApp: PostMessage;
         openUrl: PostMessage;
+        openAppWithTag: PostMessage;
       };
     };
   }
